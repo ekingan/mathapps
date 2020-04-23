@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Client, type: :model do
   let!(:user) { FactoryBot.create(:user) }
+  let!(:address) { FactoryBot.create(:address) }
   subject {
     described_class.create(
       first_name: 'Yvonne',
@@ -11,6 +12,7 @@ RSpec.describe Client, type: :model do
       phone: 5032344959,
       occupation: 'BallBoy',
       user_id: user.id,
+      address_id: address.id,
       discontinued: false
     )
   }
@@ -76,6 +78,12 @@ RSpec.describe Client, type: :model do
 
     it 'defaults to discontinued false' do
       expect(subject.discontinued).to be_falsey
+    end
+  end
+
+  describe '#full_name' do
+    it 'has a full name' do
+      expect(subject.full_name).to eq 'Yvonne Carter'
     end
   end
 end
