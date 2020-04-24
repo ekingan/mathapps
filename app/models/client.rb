@@ -1,6 +1,7 @@
 class Client < ApplicationRecord
   belongs_to :user
   belongs_to :address
+  belongs_to :spouse, class_name: "Client", optional: true
   enum entity_type: [:INDIVIDUAL, :PARTNERSHIP, :S_CORP, :C_CORP, :NON_PROFIT, :TRUST, :ESTATE]
   validates_presence_of :first_name, :last_name, :email, :user_id, :entity_type
   validates_uniqueness_of :last_name, :scope => :first_name

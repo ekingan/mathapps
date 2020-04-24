@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Client, type: :model do
-  let!(:user) { FactoryBot.create(:user) }
-  let!(:address) { FactoryBot.create(:address) }
+  let!(:user) { create(:user) }
+  let!(:address) { create(:address) }
   subject {
     described_class.create(
       first_name: 'Yvonne',
@@ -68,6 +68,11 @@ RSpec.describe Client, type: :model do
         subject.occupation = nil
         expect(subject).to be_valid
       end
+
+      it 'is valid without a spouse' do
+        subject.spouse = nil
+        expect(subject).to be_valid
+      end
     end
   end
 
@@ -84,6 +89,14 @@ RSpec.describe Client, type: :model do
   describe '#full_name' do
     it 'has a full name' do
       expect(subject.full_name).to eq 'Yvonne Carter'
+    end
+  end
+
+  describe '#spouse' do
+    it 'has a spouse' do
+      spouse = create(:client)
+      taxpayer = create(:client, spouse: spouse)
+      expect(taxpayer.spouse).to eq spouse
     end
   end
 end

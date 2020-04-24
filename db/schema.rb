@@ -37,16 +37,11 @@ ActiveRecord::Schema.define(version: 2020_04_23_135321) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "entity_type", default: 0, null: false
     t.boolean "discontinued"
+    t.bigint "spouse_id"
     t.bigint "address_id"
     t.index ["address_id"], name: "index_clients_on_address_id"
+    t.index ["spouse_id"], name: "index_clients_on_spouse_id"
     t.index ["user_id"], name: "index_clients_on_user_id"
-  end
-
-  create_table "clients_spouses", id: false, force: :cascade do |t|
-    t.bigint "client_id", null: false
-    t.bigint "spouse_id", null: false
-    t.index ["client_id", "spouse_id"], name: "index_clients_spouses_on_client_id_and_spouse_id"
-    t.index ["spouse_id", "client_id"], name: "index_clients_spouses_on_spouse_id_and_client_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -68,5 +63,6 @@ ActiveRecord::Schema.define(version: 2020_04_23_135321) do
   end
 
   add_foreign_key "clients", "addresses"
+  add_foreign_key "clients", "clients", column: "spouse_id"
   add_foreign_key "clients", "users"
 end
