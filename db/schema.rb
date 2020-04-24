@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_23_135321) do
+ActiveRecord::Schema.define(version: 2020_04_24_140516) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,21 @@ ActiveRecord::Schema.define(version: 2020_04_23_135321) do
     t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
+  create_table "jobs", force: :cascade do |t|
+    t.integer "job_type", default: 0, null: false
+    t.float "price", default: 0.0
+    t.boolean "paid_in_full", default: false, null: false
+    t.text "notes"
+    t.date "due_date"
+    t.integer "status", default: 0, null: false
+    t.bigint "client_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_jobs_on_client_id"
+    t.index ["user_id"], name: "index_jobs_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "first_name"
@@ -65,4 +80,6 @@ ActiveRecord::Schema.define(version: 2020_04_23_135321) do
   add_foreign_key "clients", "addresses"
   add_foreign_key "clients", "clients", column: "spouse_id"
   add_foreign_key "clients", "users"
+  add_foreign_key "jobs", "clients"
+  add_foreign_key "jobs", "users"
 end
