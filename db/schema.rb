@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_24_140516) do
+ActiveRecord::Schema.define(version: 2020_04_25_022830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,26 @@ ActiveRecord::Schema.define(version: 2020_04_24_140516) do
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
+  create_table "tax_returns", force: :cascade do |t|
+    t.integer "fed_form", null: false
+    t.integer "tax_year", null: false
+    t.string "primary_state"
+    t.string "other_states"
+    t.boolean "printed", default: false
+    t.boolean "scanned", default: false
+    t.boolean "uploaded", default: false
+    t.date "filed"
+    t.date "ack_fed"
+    t.date "ack_primary_state"
+    t.date "ack_other_states"
+    t.boolean "rejected", default: false
+    t.text "notes"
+    t.bigint "job_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_tax_returns_on_job_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "first_name"
@@ -82,4 +102,5 @@ ActiveRecord::Schema.define(version: 2020_04_24_140516) do
   add_foreign_key "clients", "users"
   add_foreign_key "jobs", "clients"
   add_foreign_key "jobs", "users"
+  add_foreign_key "tax_returns", "jobs"
 end
