@@ -80,11 +80,48 @@ RSpec.describe Payment, type: :model do
     end
   end
 
-  describe 'sum_of_payments' do
+  describe '#sum_of_payments' do
     it 'adds up all payments for a given job' do
       Payment.create(job_id: job.id, partial_payment: true, amount: 25)
       Payment.create(job_id: job.id, partial_payment: true, amount: 50)
       expect(Payment.last.sum_of_payments.to_i).to eq 75
+    end
+  end
+
+  describe '#fully_paid?' do
+    it 'returns false if the job is not fully paid' do
+      Payment.create(job_id: job.id, partial_payment: true, amount: 25)
+      payment = Payment.create(job_id: job.id, partial_payment: true, amount: 50)
+      expect(payment.fully_paid?).to be_falsey
+    end
+
+    it 'returns true if the job is fully paid' do
+      Payment.create(job_id: job.id, partial_payment: true, amount: 25)
+      payment = Payment.create(job_id: job.id, partial_payment: true, amount: 75)
+      expect(payment.fully_paid?).to be_truthy
+    end
+  end
+
+  describe '#update_paid_in_full' do
+    it 'updates the job paid in full value to true' do
+      job = create(:job, price: 500)
+      Payment.create(job_id: job.id, amount: 500)
+      expect(job.reload.paid_in_full).to be_truthy
+    end
+
+    it 'updates the job paid in full value to true' do
+      job = create(:job, price: 500)
+      Payment.create(job_id: job.id, partial_payment: true, amount: 200)
+      expect(job.reload.paid_in_full).to be_falsey
+    end
+  end
+
+  describe '#set_fully_paid_false' do
+    it 'sets job attribute fully_paid to false when a payment is deleted' do
+      job = create(:job, price: 500)
+      payment = Payment.create(job_id: job.id, amount: 500)
+      payment.destroy
+      expect(job.reload.paid_in_full).to be_falsey
     end
   end
 end
