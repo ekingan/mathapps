@@ -5,6 +5,8 @@ FactoryBot.define do
     password { 'password' }
     password_confirmation { 'password' }
     email { Faker::Internet.email }
-    subdomain { Faker::Science.element }
+    sequence :subdomain do |n|
+      "#{ Faker::Science.element }#{ n }"
+    end
   end
 end
