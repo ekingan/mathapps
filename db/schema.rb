@@ -36,7 +36,8 @@ ActiveRecord::Schema.define(version: 2020_04_25_123916) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "entity_type", default: 0, null: false
-    t.boolean "discontinued"
+    t.boolean "discontinued", default: false
+    t.text "notes"
     t.bigint "spouse_id"
     t.bigint "address_id"
     t.index ["address_id"], name: "index_clients_on_address_id"

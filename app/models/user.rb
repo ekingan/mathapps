@@ -4,6 +4,13 @@ class User < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
   after_create :create_tenant
+  enum role: [:admin, :preparer]
+  validates_presence_of :first_name, :last_name, :email, :password
+
+
+  def full_name
+    first_name + ' ' + last_name
+  end
 
   private
 
