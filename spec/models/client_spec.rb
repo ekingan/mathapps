@@ -73,6 +73,11 @@ RSpec.describe Client, type: :model do
         subject.spouse = nil
         expect(subject).to be_valid
       end
+
+      it 'is valid without notes' do
+        subject.notes = nil
+        expect(subject).to be_valid
+      end
     end
   end
 
