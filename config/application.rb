@@ -32,4 +32,5 @@ module Mathapps
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
+  LOCATIONS = YAML.load(File.read(Rails.root.join("config/locations.yml"))).symbolize_keys
 end

@@ -1,8 +1,8 @@
 class Client < ApplicationRecord
   belongs_to :user
-  belongs_to :address
+  belongs_to :address, optional: true
   belongs_to :spouse, class_name: "Client", optional: true
-  accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :user, :spouse, :address
   enum entity_type: [:INDIVIDUAL, :PARTNERSHIP, :S_CORP, :C_CORP, :NON_PROFIT, :TRUST, :ESTATE]
   validates_presence_of :first_name, :last_name, :email, :user_id, :entity_type
   validates_uniqueness_of :email

@@ -41,4 +41,24 @@ jQuery(document).ready(function($) {
       $(this).find('ul').slideToggle().toggleClass('slided_down');
     });
   });
+
+  $(".btn-add-spouse" ).click(function(event) {
+    event.preventDefault();
+    $("#spouse-form").toggle();
+    if (this.textContent == 'Hide Spouse') {
+      $(this).text("Add Spouse")
+    } else {
+      $(this).text("Hide Spouse")
+    }
+  });
+
+  $( ".btn-add-address" ).click(function(event) {
+    event.preventDefault();
+    $("#address-form").toggle();
+    if (this.textContent == 'Hide Address') {
+      $(this).text("Add Address")
+    } else {
+      $(this).text("Hide Address")
+    }
+  });
 });

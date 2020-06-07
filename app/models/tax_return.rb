@@ -4,6 +4,14 @@ class TaxReturn < ApplicationRecord
   validates_presence_of :fed_form, :tax_year
   after_initialize :set_tax_year
 
+  def title
+    "#{tax_year}-#{fed_form_number}"
+  end
+
+  def fed_form_number
+    fed_form.split('_')[1]
+  end
+
   private
 
   def set_tax_year
