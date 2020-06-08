@@ -1,10 +1,10 @@
-class ClientInformation
+class ClientInformationService
   def initialize(params)
     @client_id = params[:id]
     @client_params = params.dig(:client)
     @preparer_id = @client_params.dig(:user_id)
-    @spouse_params = client_params.delete(:spouse_attributes)
-    @address_params = client_params.delete(:address_attributes)
+    @spouse_params = client_params.delete(:spouse_attributes) || {}
+    @address_params = client_params.delete(:address_attributes) || {}
   end
 
   attr_reader :client_params, :spouse_params, :address_params, :preparer_id, :client_id
@@ -15,7 +15,6 @@ class ClientInformation
         address = create_address
         create_address if spouse_present?
       end
-
       if spouse_present?
         spouse_params.merge!(user_id: preparer_id)
         spouse = create_client(spouse_params, address)
@@ -44,7 +43,8 @@ class ClientInformation
   def create_client(params, spouse = nil, address = nil)
     params.merge!(spouse_id: spouse.id) unless spouse.nil?
     params.merge!(address_id: address.id) unless address.nil?
-    client = Client.create(params)
+    client = Client.new(params)
+    client.save
     client
   end
 

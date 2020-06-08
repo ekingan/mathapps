@@ -98,12 +98,12 @@ end
 
   controller do
     def create
-      ClientInformation.new(permitted_params).create
+      ClientInformationService.new(permitted_params).create
       redirect_to admin_clients_path
     end
 
     def update
-      ClientInformation.new(permitted_params).update
+      ClientInformationService.new(permitted_params).update
       redirect_to admin_client_path(params[:id])
     end
   end
