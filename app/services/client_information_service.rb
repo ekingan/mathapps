@@ -13,13 +13,13 @@ class ClientInformationService
     ActiveRecord::Base.transaction do
       if address_present?
         address = create_address
-        create_address if spouse_present?
       end
       if spouse_present?
         spouse_params.merge!(user_id: preparer_id)
         spouse = create_client(spouse_params, address)
       end
-      create_client(client_params, spouse, address)
+      client = create_client(client_params, address)
+      marry_clients(client, spouse) if spouse.present?
     end
   end
 
@@ -40,16 +40,20 @@ class ClientInformationService
 
   private
 
-  def create_client(params, spouse = nil, address = nil)
-    params.merge!(spouse_id: spouse.id) unless spouse.nil?
+  def create_client(params, address)
     params.merge!(address_id: address.id) unless address.nil?
-    client = Client.new(params)
-    client.save
-    client
+    Client.create(params)
   end
 
   def create_address
     Address.create(address_params)
+  end
+
+  def marry_clients(client, spouse)
+    spouse = Client.find spouse.id
+    client = Client.find client.id
+    spouse.update(spouse_id: client.id)
+    client.update(spouse_id: spouse.id)
   end
 
   def update_address

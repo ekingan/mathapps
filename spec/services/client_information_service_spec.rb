@@ -72,7 +72,8 @@ RSpec.describe ClientInformationService do
         expect(Client.last.spouse_id).to eq Client.first.id
       end
       it 'saves the client id to the spouse' do
-
+        subject.create
+        expect(Client.first.spouse_id).to eq Client.last.id
       end
     end
   end
