@@ -328,7 +328,7 @@ DEPENDENCIES
   font-awesome-rails
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
-  pg (>= 0.18, < 2.0)
+  pg
   pry-rails
   puma (~> 4.1)
   pundit
@@ -347,7 +347,7 @@ DEPENDENCIES
   webpacker (~> 4.0)
 
 RUBY VERSION
-   ruby 2.6.2p47
+   ruby 2.7.1p83
 
 BUNDLED WITH
-   1.17.2
+   2.1.4

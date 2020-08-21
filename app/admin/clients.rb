@@ -54,6 +54,16 @@ show do
           end
         end
       end
+      if client.address.present?
+        panel "Address" do
+          attributes_table_for client.address do
+            row :street
+            row :city
+            row :state
+            row :zip_code
+          end
+        end
+      end
     end
   end
 end
