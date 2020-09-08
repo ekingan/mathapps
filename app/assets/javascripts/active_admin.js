@@ -46,7 +46,7 @@ jQuery(document).ready(function($) {
     event.preventDefault();
     $("#spouse-form").toggle();
     if (this.textContent == 'Hide Spouse') {
-      $(this).text("Add Spouse")
+      $(this).text("Spouse")
     } else {
       $(this).text("Hide Spouse")
     }
@@ -56,7 +56,7 @@ jQuery(document).ready(function($) {
     event.preventDefault();
     $("#address-form").toggle();
     if (this.textContent == 'Hide Address') {
-      $(this).text("Add Address")
+      $(this).text("Address")
     } else {
       $(this).text("Hide Address")
     }
