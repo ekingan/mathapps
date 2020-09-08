@@ -14,7 +14,10 @@ class SpouseService
 
   def marry
     Client.transaction do
-
+      client.spouse = spouse
+      spouse.spouse = client
+      client.save!
+      spouse.save!
     end
   end
 

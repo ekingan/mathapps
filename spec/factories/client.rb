@@ -6,5 +6,6 @@ FactoryBot.define do
     email { Faker::Internet.email }
     user
     address
+    spouse { nil }
   end
 end

@@ -25,6 +25,14 @@ ActiveAdmin.register Client do
     link_to 'Separate Clients', divorce_admin_client_path(client), method: :put if client.married?
   end
 
+  member_action :marry, method: :put do
+    resource.marry!
+    redirect_to resource_path, notice: "The clients have been married"
+  end
+
+  action_item :marry, only: :show do
+    link_to 'Marry Clients', marry_admin_client_path(client), method: :put unless true || client.married?
+  end
 
   index do
     selectable_column
@@ -130,6 +138,10 @@ ActiveAdmin.register Client do
 
     def divorce
       SpouseService.new(resource).divorce
+    end
+
+    def marry
+      SpouseService.new(resource).marry
     end
   end
 end
