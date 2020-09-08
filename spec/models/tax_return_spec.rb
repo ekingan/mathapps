@@ -106,7 +106,7 @@ RSpec.describe TaxReturn, type: :model do
       expect(subject.rejected).to be_falsey
     end
 
-    context 'tax year' do
+    context '#tax_year' do
       subject {
         described_class.create(
           fed_form: 'Individual_1040',
@@ -116,6 +116,16 @@ RSpec.describe TaxReturn, type: :model do
       }
       it 'sets the current tax year if year not present' do
         expect(subject.tax_year).to eq 2019
+      end
+    end
+    context '#fed_form_number' do
+      it 'sets the fed form number' do
+        expect(subject.fed_form_number).to eq "1040"
+      end
+    end
+    context '#title' do
+      it 'sets the title' do
+        expect(subject.title).to eq "2017-1040"
       end
     end
   end
